@@ -1,0 +1,34 @@
+[versions]
+agp = "8.2.2"
+android-compileSdk = "34"
+android-minSdk = "24"
+android-targetSdk = "34"
+androidx-activityCompose = "1.9.1"
+compose-plugin = "1.6.11"
+kotlin = "2.0.20"
+kotlinx-coroutines = "1.8.1"
+ktor = "2.3.11"
+ktor-wasm = "3.0.0-wasm2"
+logback = "1.5.8"
+spotless = "7.0.0.BETA2"
+
+[libraries]
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-core-wasm = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-wasm" }
+ktor-client-content-negociation-wasm = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-wasm" }
+ktor-client-resources-wasm = { module = "io.ktor:ktor-client-resources", version.ref = "ktor-wasm" }
+ktor-client-logging-wasm = { module = "io.ktor:ktor-client-logging", version.ref = "ktor-wasm" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+
