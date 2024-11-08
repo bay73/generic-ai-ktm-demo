@@ -16,6 +16,7 @@ object MultiClient {
             AiClient.Type.OPEN_AI to "gpt-4o",
             AiClient.Type.AI21 to "jamba-1.5-large",
             AiClient.Type.MISTRAL to "mistral-large-latest",
+            AiClient.Type.SAMBA_NOVA to "Meta-Llama-3.2-3B-Instruct"
         )
 
     private var models: Map<AiClient.Type, List<String>> = emptyMap()
