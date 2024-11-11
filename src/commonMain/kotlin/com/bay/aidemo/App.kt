@@ -196,7 +196,7 @@ fun App() {
                     ),
             ) {
                 Card(
-                    modifier = Modifier.height(500.dp).width(900.dp).padding(16.dp),
+                    modifier = Modifier.height(900.dp).width(900.dp).padding(16.dp),
                     shape = RoundedCornerShape(16.dp),
                 ) {
                     Column(
@@ -210,13 +210,13 @@ fun App() {
                             fontSize = 1.2.em,
                         )
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(text = "Provider", modifier = Modifier.width(100.dp))
+                            Text(text = "Provider", modifier = Modifier.width(130.dp))
                             Text(text = "API Key", modifier = Modifier.width(250.dp))
                             Text(text = "Model", modifier = Modifier.width(450.dp))
                         }
                         AiClient.Type.entries.forEach { provider ->
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(text = provider.name, modifier = Modifier.width(100.dp))
+                                Text(text = provider.name, modifier = Modifier.width(130.dp))
                                 TextField(
                                     value = keys[provider] ?: "",
                                     onValueChange = { newValue ->

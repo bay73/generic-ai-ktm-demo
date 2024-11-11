@@ -10,13 +10,15 @@ object MultiClient {
     private val providers: MutableMap<AiClient.Type, AiClient> = mutableMapOf()
     private val currentModels: MutableMap<AiClient.Type, String> =
         mutableMapOf(
+            AiClient.Type.AI21 to "jamba-1.5-large",
+            AiClient.Type.ANTHROPIC to "claude-3-5-sonnet-20241022",
             AiClient.Type.BEDROCK to "anthropic.claude-3-5-sonnet-20240620-v1:0",
             AiClient.Type.COHERE to "command-r",
             AiClient.Type.GOOGLE to "models/gemini-1.5-pro-001",
-            AiClient.Type.OPEN_AI to "gpt-4o",
-            AiClient.Type.AI21 to "jamba-1.5-large",
             AiClient.Type.MISTRAL to "mistral-large-latest",
-            AiClient.Type.SAMBA_NOVA to "Meta-Llama-3.2-3B-Instruct"
+            AiClient.Type.OPEN_AI to "gpt-4o",
+            AiClient.Type.SAMBA_NOVA to "Meta-Llama-3.2-3B-Instruct",
+            AiClient.Type.TOGETHER_AI to "meta-llama/Meta-Llama-3-70B-Instruct-Turbo"
         )
 
     private var models: Map<AiClient.Type, List<String>> = emptyMap()
