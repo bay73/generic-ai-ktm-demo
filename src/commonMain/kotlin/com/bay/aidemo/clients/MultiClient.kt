@@ -13,6 +13,7 @@ object MultiClient {
             AiClient.Type.AI21 to "jamba-1.5-large",
             AiClient.Type.ANTHROPIC to "claude-3-5-sonnet-20241022",
             AiClient.Type.BEDROCK to "anthropic.claude-3-5-sonnet-20240620-v1:0",
+            AiClient.Type.CEREBRAS to "llama3.1-8b",
             AiClient.Type.COHERE to "command-r",
             AiClient.Type.GOOGLE to "models/gemini-1.5-pro-001",
             AiClient.Type.MISTRAL to "mistral-large-latest",
