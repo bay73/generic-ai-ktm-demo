@@ -17,9 +17,9 @@ object MultiClient {
             AiClient.Type.COHERE to "command-r",
             AiClient.Type.GOOGLE to "models/gemini-1.5-pro-001",
             AiClient.Type.MISTRAL to "mistral-large-latest",
-            AiClient.Type.OPEN_AI to "gpt-4o",
+            AiClient.Type.OPEN_AI to "gpt-4o-mini",
             AiClient.Type.SAMBA_NOVA to "Meta-Llama-3.2-3B-Instruct",
-            AiClient.Type.TOGETHER_AI to "meta-llama/Meta-Llama-3-70B-Instruct-Turbo"
+            AiClient.Type.TOGETHER_AI to "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo"
         )
 
     private var models: Map<AiClient.Type, List<String>> = emptyMap()
@@ -71,7 +71,7 @@ object MultiClient {
                 AiResponse(errorMessage = it.value.exceptionOrNull().toString())
             } else {
                 val response = it.value.getOrNull()
-                AiResponse(response = response?.response, tokenCount = response?.usage?.totalToken ?: 0)
+                AiResponse(response = response?.response, tokenCount = response?.usage?.totalTokens ?: 0)
             }
         }
     }
