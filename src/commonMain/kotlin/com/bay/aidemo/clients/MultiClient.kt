@@ -1,6 +1,7 @@
 package com.bay.aidemo.clients
 
 import com.bay.aiclient.AiClient
+import com.bay.aiclient.api.azureopenai.AzureOpenAiClient
 import com.bay.aiclient.api.bedrock.BedrockClient
 import io.ktor.client.plugins.logging.LogLevel
 import kotlinx.coroutines.async
@@ -12,6 +13,7 @@ object MultiClient {
         mutableMapOf(
             AiClient.Type.AI21 to "jamba-1.5-large",
             AiClient.Type.ANTHROPIC to "claude-3-5-sonnet-20241022",
+            AiClient.Type.AZURE_OPENAI to "gpt-4o-mini",
             AiClient.Type.BEDROCK to "anthropic.claude-3-5-sonnet-20240620-v1:0",
             AiClient.Type.CEREBRAS to "llama3.1-8b",
             AiClient.Type.COHERE to "command-r",
@@ -78,21 +80,35 @@ object MultiClient {
 
     fun setKeys(keys: Map<AiClient.Type, String>) {
         keys.forEach { (provider, key) ->
-            if (provider == AiClient.Type.BEDROCK) {
-                providers[provider] =
-                    AiClient.get<_, BedrockClient.Builder>(BedrockClient::class) {
-                        val parts = key.split("%")
-                        check(parts.size == 4)
-                        credentials = BedrockClient.Credentials(parts[0], false, parts[1], parts[2], parts[3])
-                        defaultModel = currentModels[provider]
-                    }
-            } else {
-                providers[provider] =
-                    AiClient.get(provider) {
-                        apiAky = key
-                        defaultModel = currentModels[provider]
-                        httpLogLevel = LogLevel.ALL
-                    }
+            when (provider) {
+                AiClient.Type.BEDROCK -> {
+                    providers[provider] =
+                        AiClient.get<_, BedrockClient.Builder>(BedrockClient::class) {
+                            val parts = key.split("%")
+                            check(parts.size == 4)
+                            credentials = BedrockClient.Credentials(parts[0], false, parts[1], parts[2], parts[3])
+                            defaultModel = currentModels[provider]
+                        }
+                }
+                AiClient.Type.AZURE_OPENAI -> {
+                    providers[provider] =
+                        AiClient.get<_, AzureOpenAiClient.Builder>(AzureOpenAiClient::class) {
+                            val parts = key.split("%")
+                            check(parts.size == 2)
+                            resourceName = parts[0]
+                            apiKey = parts[1]
+                            defaultModel = currentModels[provider]
+                            httpLogLevel = LogLevel.ALL
+                        }
+                }
+                else -> {
+                    providers[provider] =
+                        AiClient.get(provider) {
+                            apiKey = key
+                            defaultModel = currentModels[provider]
+                            httpLogLevel = LogLevel.ALL
+                        }
+                }
             }
         }
     }
