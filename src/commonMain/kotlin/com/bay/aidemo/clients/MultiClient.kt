@@ -31,16 +31,18 @@ object MultiClient {
     suspend fun getModels(refreshState: Boolean): Map<AiClient.Type, List<String>> {
         if (models.isEmpty() || refreshState) {
             models =
-                providers.mapValues { it.value.models() }.mapValues {
-                    if (it.value.isFailure) {
-                        emptyList()
-                    } else {
-                        it.value
-                            .getOrNull()
-                            ?.models
-                            ?.map { model -> model.id } ?: emptyList()
+                providers
+                    .mapValues { it.value.models() }
+                    .mapValues {
+                        if (it.value.isFailure) {
+                            emptyList()
+                        } else {
+                            it.value
+                                .getOrNull()
+                                ?.models
+                                ?.map { model -> model.id } ?: emptyList()
+                        }
                     }
-                }
         }
         return models
     }
@@ -68,14 +70,19 @@ object MultiClient {
                     }
                 }
             }
-        return jobs.mapValues { it.value.await() }.mapValues {
-            if (it.value.isFailure) {
-                AiResponse(errorMessage = it.value.exceptionOrNull().toString())
-            } else {
-                val response = it.value.getOrNull()
-                AiResponse(response = response?.response, tokenCount = response?.usage?.totalTokens ?: 0)
+        return jobs
+            .mapValues { it.value.await() }
+            .mapValues {
+                if (it.value.isFailure) {
+                    AiResponse(errorMessage = it.value.exceptionOrNull().toString())
+                } else {
+                    val response = it.value.getOrNull()
+                    AiResponse(
+                        response = response?.response,
+                        tokenCount = response?.usage?.totalTokens ?: 0,
+                    )
+                }
             }
-        }
     }
 
     fun setKeys(keys: Map<AiClient.Type, String>) {
@@ -86,7 +93,8 @@ object MultiClient {
                         AiClient.get<_, BedrockClient.Builder>(BedrockClient::class) {
                             val parts = key.split("%")
                             check(parts.size == 4)
-                            credentials = BedrockClient.Credentials(parts[0], false, parts[1], parts[2], parts[3])
+                            credentials =
+                                BedrockClient.Credentials(parts[0], false, parts[1], parts[2], parts[3])
                             defaultModel = currentModels[provider]
                         }
                 }

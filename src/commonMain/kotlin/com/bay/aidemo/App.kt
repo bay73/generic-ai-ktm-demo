@@ -86,9 +86,7 @@ fun App() {
         var loading by remember { mutableStateOf(false) }
         var showSystemPrompt by remember { mutableStateOf(false) }
         var showSettings by remember { mutableStateOf(false) }
-        scope.launch {
-            models = MultiClient.getModels(false)
-        }
+        scope.launch { models = MultiClient.getModels(false) }
         Column(
             Modifier.fillMaxSize().padding(all = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -109,7 +107,10 @@ fun App() {
                 }
             }
             Box(modifier = Modifier.fillMaxWidth().weight(1f).padding(start = 8.dp, end = 8.dp)) {
-                LazyColumn(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
                     item {
                         if (loading) {
                             CircularProgressIndicator(
@@ -174,9 +175,10 @@ fun App() {
                         scope.launch {
                             val results = MultiClient.chatResponses(userPrompt, systemPrompt)
                             responses =
-                                results.mapValues { (_, result) -> result.errorMessage ?: (result.response ?: "") }
-                            statistics =
-                                results.mapValues { (_, result) -> "Token count:${result.tokenCount}" }
+                                results.mapValues { (_, result) ->
+                                    result.errorMessage ?: (result.response ?: "")
+                                }
+                            statistics = results.mapValues { (_, result) -> "Token count:${result.tokenCount}" }
                             loading = false
                             userPrompt = ""
                         }
@@ -223,9 +225,7 @@ fun App() {
                                         keys = keys.toMutableMap().apply { this[provider] = newValue }
                                         MultiClient.setKeys(keys)
                                         KeyStorage.saveKeys(keys)
-                                        scope.launch {
-                                            models = MultiClient.getModels(true)
-                                        }
+                                        scope.launch { models = MultiClient.getModels(true) }
                                     },
                                     modifier = Modifier.width(250.dp),
                                     placeholder = { Text("Put API key for ${provider.name}") },
@@ -234,7 +234,8 @@ fun App() {
                                 ExposedDropdownMenuBox(
                                     expanded = modelsExpanded[provider] ?: false,
                                     onExpandedChange = { setModelsExpanded(provider, true) },
-                                    modifier = Modifier.height(55.dp).width(450.dp).padding(start = 8.dp, end = 8.dp),
+                                    modifier =
+                                        Modifier.height(55.dp).width(450.dp).padding(start = 8.dp, end = 8.dp),
                                 ) {
                                     TextField(
                                         value = currentModels[provider] ?: "",
@@ -253,10 +254,12 @@ fun App() {
                                         onDismissRequest = { setModelsExpanded(provider, false) },
                                     ) {
                                         models[provider]?.forEach { item ->
-                                            DropdownMenuItem(onClick = {
-                                                setModelsExpanded(provider, false)
-                                                setCurrentModel(provider, item)
-                                            }) {
+                                            DropdownMenuItem(
+                                                onClick = {
+                                                    setModelsExpanded(provider, false)
+                                                    setCurrentModel(provider, item)
+                                                },
+                                            ) {
                                                 Text(text = item)
                                             }
                                         }

@@ -16,9 +16,7 @@ actual fun writeLocalStorage(
     path: String,
     settings: Map<String, String>,
 ) {
-    settings.forEach { (key, value) ->
-        setLocalStorageKey("$path:$key", value)
-    }
+    settings.forEach { (key, value) -> setLocalStorageKey("$path:$key", value) }
 }
 
 private fun setLocalStorageKey(
