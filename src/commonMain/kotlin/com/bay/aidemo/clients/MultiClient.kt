@@ -21,7 +21,7 @@ object MultiClient {
             AiClient.Type.MISTRAL to "mistral-large-latest",
             AiClient.Type.OPEN_AI to "gpt-4o-mini",
             AiClient.Type.SAMBA_NOVA to "Meta-Llama-3.2-3B-Instruct",
-            AiClient.Type.TOGETHER_AI to "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo"
+            AiClient.Type.TOGETHER_AI to "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
         )
 
     private var models: Map<AiClient.Type, List<String>> = emptyMap()
