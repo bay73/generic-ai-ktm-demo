@@ -17,6 +17,7 @@ object MultiClient {
             AiClient.Type.BEDROCK to "anthropic.claude-3-5-sonnet-20240620-v1:0",
             AiClient.Type.CEREBRAS to "llama3.1-8b",
             AiClient.Type.COHERE to "command-r",
+            AiClient.Type.DEEP_SEEK to "deepseek-chat",
             AiClient.Type.GOOGLE to "models/gemini-1.5-pro-001",
             AiClient.Type.MISTRAL to "mistral-large-latest",
             AiClient.Type.OPEN_AI to "gpt-4o-mini",
