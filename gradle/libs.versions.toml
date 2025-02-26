@@ -9,7 +9,7 @@ kotlin = "2.1.10"
 kotlinx-coroutines = "1.10.1"
 ktor = "3.1.1"
 ktor-wasm = "3.0.0-wasm2"
-logback = "1.5.16"
+logback = "1.5.17"
 spotless = "7.0.2"
 
 [libraries]
