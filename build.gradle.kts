@@ -70,7 +70,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.ktor.client.logging)
             implementation(libs.logback)
-            implementation("io.github.bay73:generic-ai:0.6.1")
+            implementation("io.github.bay73:generic-ai:0.6.2")
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

@@ -19,6 +19,7 @@ object MultiClient {
             AiClient.Type.COHERE to "command-r",
             AiClient.Type.DEEP_SEEK to "deepseek-chat",
             AiClient.Type.GOOGLE to "models/gemini-2.0-pro-exp",
+            AiClient.Type.GROK to "grok-2-1212",
             AiClient.Type.MISTRAL to "mistral-large-latest",
             AiClient.Type.OPEN_AI to "o1-mini",
             AiClient.Type.SAMBA_NOVA to "Meta-Llama-3.3-70B-Instruct",
