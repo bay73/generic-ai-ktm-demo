@@ -3,6 +3,7 @@ package com.bay.aidemo.clients
 import com.bay.aiclient.AiClient
 import com.bay.aiclient.api.azureopenai.AzureOpenAiClient
 import com.bay.aiclient.api.bedrock.BedrockClient
+import com.bay.aiclient.api.yandex.YandexClient
 import io.ktor.client.plugins.logging.LogLevel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -24,6 +25,7 @@ object MultiClient {
             AiClient.Type.OPEN_AI to "o1-mini",
             AiClient.Type.SAMBA_NOVA to "Meta-Llama-3.3-70B-Instruct",
             AiClient.Type.TOGETHER_AI to "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
+            AiClient.Type.YANDEX to "yandexgpt",
         )
 
     private var models: Map<AiClient.Type, List<String>> = emptyMap()
@@ -106,6 +108,17 @@ object MultiClient {
                             val parts = key.split("%")
                             check(parts.size == 2)
                             resourceName = parts[0]
+                            apiKey = parts[1]
+                            defaultModel = currentModels[provider]
+                            httpLogLevel = LogLevel.ALL
+                        }
+                }
+                AiClient.Type.YANDEX -> {
+                    providers[provider] =
+                        AiClient.get<_, YandexClient.Builder>(YandexClient::class) {
+                            val parts = key.split("%")
+                            check(parts.size == 2)
+                            resourceFolder = parts[0]
                             apiKey = parts[1]
                             defaultModel = currentModels[provider]
                             httpLogLevel = LogLevel.ALL
