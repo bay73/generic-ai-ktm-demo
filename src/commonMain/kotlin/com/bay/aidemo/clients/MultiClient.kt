@@ -9,6 +9,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 object MultiClient {
+    fun getClientTypes() = listOf(AiClient.Type.GOOGLE, AiClient.Type.INCEPTION_LABS, AiClient.Type.OPEN_AI)
+
     private val providers: MutableMap<AiClient.Type, AiClient> = mutableMapOf()
     private val currentModels: MutableMap<AiClient.Type, String> =
         mutableMapOf(
@@ -21,6 +23,7 @@ object MultiClient {
             AiClient.Type.DEEP_SEEK to "deepseek-chat",
             AiClient.Type.GOOGLE to "models/gemini-2.0-pro-exp",
             AiClient.Type.GROK to "grok-2-1212",
+            AiClient.Type.INCEPTION_LABS to "mercury-coder-small",
             AiClient.Type.MISTRAL to "mistral-large-latest",
             AiClient.Type.OPEN_AI to "o1-mini",
             AiClient.Type.SAMBA_NOVA to "Meta-Llama-3.3-70B-Instruct",

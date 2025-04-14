@@ -94,7 +94,7 @@ fun App() {
         ) {
             Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopStart) {
                 ScrollableTabRow(modifier = Modifier.fillMaxWidth(), selectedTabIndex = selectedTabIndex) {
-                    AiClient.Type.entries.forEachIndexed { index, aiProvider ->
+                    MultiClient.getClientTypes().forEachIndexed { index, aiProvider ->
                         Tab(
                             selected = selectedTabIndex == index,
                             onClick = { selectedTabIndex = index },
