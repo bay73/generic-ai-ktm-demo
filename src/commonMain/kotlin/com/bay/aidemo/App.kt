@@ -119,14 +119,14 @@ fun App() {
                         } else {
                             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.TopEnd) {
                                 Text(
-                                    text = statistics[AiClient.Type.entries[selectedTabIndex]] ?: "",
+                                    text = statistics[MultiClient.getClientTypes()[selectedTabIndex]] ?: "",
                                     color = Color.Blue,
                                     fontStyle = FontStyle.Italic,
                                     fontSize = 0.85.em,
                                 )
                             }
                             Text(
-                                text = responses[AiClient.Type.entries[selectedTabIndex]] ?: "",
+                                text = responses[MultiClient.getClientTypes()[selectedTabIndex]] ?: "",
                                 overflow = TextOverflow.Visible,
                             )
                         }
@@ -216,7 +216,7 @@ fun App() {
                             Text(text = "API Key", modifier = Modifier.width(250.dp))
                             Text(text = "Model", modifier = Modifier.width(450.dp))
                         }
-                        AiClient.Type.entries.forEach { provider ->
+                        MultiClient.getClientTypes().forEach { provider ->
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(text = provider.name, modifier = Modifier.width(130.dp))
                                 TextField(

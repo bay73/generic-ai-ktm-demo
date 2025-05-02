@@ -9,7 +9,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 object MultiClient {
-    fun getClientTypes() = listOf(AiClient.Type.GOOGLE, AiClient.Type.INCEPTION_LABS, AiClient.Type.OPEN_AI)
+    fun getClientTypes() = listOf(AiClient.Type.GOOGLE, AiClient.Type.NOVITA, AiClient.Type.OPEN_AI)
 
     private val providers: MutableMap<AiClient.Type, AiClient> = mutableMapOf()
     private val currentModels: MutableMap<AiClient.Type, String> =
@@ -25,6 +25,7 @@ object MultiClient {
             AiClient.Type.GROK to "grok-2-1212",
             AiClient.Type.INCEPTION_LABS to "mercury-coder-small",
             AiClient.Type.MISTRAL to "mistral-large-latest",
+            AiClient.Type.NOVITA to "deepseek/deepseek-v3-turbo",
             AiClient.Type.OPEN_AI to "o1-mini",
             AiClient.Type.SAMBA_NOVA to "Meta-Llama-3.3-70B-Instruct",
             AiClient.Type.TOGETHER_AI to "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
@@ -39,6 +40,7 @@ object MultiClient {
         if (models.isEmpty() || refreshState) {
             models =
                 providers
+                    .filter { getClientTypes().contains(it.key) }
                     .mapValues { it.value.models() }
                     .mapValues {
                         if (it.value.isFailure) {
@@ -68,14 +70,16 @@ object MultiClient {
     ): Map<AiClient.Type, AiResponse<String>> {
         val jobs =
             coroutineScope {
-                providers.mapValues {
-                    async {
-                        it.value.generateText {
-                            this.prompt = prompt
-                            this.systemInstructions = systemPrompt
+                providers
+                    .filter { getClientTypes().contains(it.key) }
+                    .mapValues {
+                        async {
+                            it.value.generateText {
+                                this.prompt = prompt
+                                this.systemInstructions = systemPrompt
+                            }
                         }
                     }
-                }
             }
         return jobs
             .mapValues { it.value.await() }
