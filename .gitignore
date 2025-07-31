@@ -4,5 +4,6 @@
 build/
 .api_keys
 kotlin-js-store/
+local.properties
 
 *.jar

@@ -16,7 +16,6 @@ plugins {
 kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "composeApp"
         browser {
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
@@ -65,12 +64,13 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
+            implementation(compose.materialIconsExtended)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.ktor.client.logging)
             implementation(libs.logback)
-            implementation("io.github.bay73:generic-ai:0.6.5")
+            implementation("io.github.bay73:generic-ai:0.6.6")
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
